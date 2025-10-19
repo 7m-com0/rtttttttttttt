@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نموذج إرسال بيانات وصورة</title>
+<style>
+  body { font-family: 'Cairo', sans-serif; background: #111; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; }
+  form { background: #222; padding: 25px; border-radius: 15px; box-shadow: 0 0 10px #f00; width: 350px; }
+  input, button { width: 100%; padding: 8px; margin: 6px 0; border: none; border-radius: 5px; }
+  button { background: #f00; color: #fff; cursor: pointer; font-size: 16px; }
+  button:hover { background: #900; }
+</style>
+</head>
+<body>
+
+<form id="form">
+  <h2 style="text-align:center;">📤 إرسال البيانات والصورة</h2>
+  <input type="text" name="name" placeholder="الاسم" required>
+  <input type="email" name="email" placeholder="الإيميل" required>
+  <input type="text" name="phone" placeholder="الهاتف">
+  <input type="file" name="file" accept="image/*">
+  <button type="submit">إرسال</button>
+</form>
+
+<script>
+const form = document.getElementById('form');
+
+// ضع هنا رابط الـ Web App الخاص بك
+const scriptURL = "https://script.google.com/macros/s/AKfycbyr2qaryHTIwIErTIIF7Aj_PcJZkEzyVV70_qhYKaQZngg9bF75_qZ9xIuHLzTDPC8SRA/exec";
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const formData = new FormData(form);
+
+  try {
+    const res = await fetch(scriptURL, { method: 'POST', body: formData });
+    const text = await res.text();
+    alert(text);
+    form.reset();
+  } catch(err) {
+    alert("❌ حدث خطأ أثناء الإرسال: " + err.message);
+    console.error(err);
+  }
+});
+</script>
+
+</body>
+</html>
